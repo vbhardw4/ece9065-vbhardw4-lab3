@@ -595,6 +595,37 @@ function showAllItems(data) {
     });
     getElementById("mainDiv").appendChild(divToViewAllItems);
 }
+function handleAdminLogOut(event) {
+    event.preventDefault();
+    removePreviousClickDivsFirst();
+    getElementById("mainDiv").removeChild(getElementById("adminPageMainDiv"));
+    //getElementById("user_registeration").removeAttribute("style");
+    getElementById("form").removeAttribute("style");
+    getElementById("mainDiv").removeAttribute("style");
+    if(timer!== null) {
+        clearInterval(timer);
+    }
+    // if(event.target.text === "Log Out") {
+    //     let mainDiv = getElementById("mainDiv");
+    //     let library_items_list = getElementById("library_items_list_id")
+    //     if(library_items_list!==null) {
+            
+    //         mainDiv.removeChild(library_items_list);
+    //     }
+    //     if(getElementById("labelForSelectItemToUpdate")!==null){
+    //         mainDiv.removeChild(getElementById("labelForSelectItemToUpdate"));
+    //     }
+    //     mainDiv.removeAttribute("style");
+    //     let adminPageMainDiv = getElementById("adminPageMainDiv");
+    //     let form = getElementById("form");
+    //     mainDiv.removeChild(adminPageMainDiv);
+    //     form.removeAttribute("style");
+    //     form.style.textAlign = "center";
+        let divtoResetMainForm = getElementById("user_registeration");
+        divtoResetMainForm.reset();
+
+    
+}
 function openSideBarNavigation() {
     document.getElementById("menuDiv").style.width = "250px";
     document.getElementById("mainDiv").style.marginLeft = "250px";
@@ -611,4 +642,14 @@ function createAdminRightsDescription() {
     spanToOpenSideBar.innerHTML = "&#9776;";
     spanToOpenSideBar.addEventListener("click",openSideBarNavigation);
     adminPageMainDiv.appendChild(spanToOpenSideBar);
+}
+function showLandingPage() {
+    showToAdmin = false;
+    disableMainFormDivs();
+    // showTranslatorElement();
+    addLogOutPageForRegularUsers();
+    // showDueDateForBooksAndCDS();
+    createAndDisplayShoppingCart();
+    handleBooksAndCDsDisplay();
+    
 }
