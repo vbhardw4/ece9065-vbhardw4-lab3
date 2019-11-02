@@ -4,22 +4,17 @@ import {LibrarySchema} from '../models/libraryModel';
 const Library = mongoose.model('library_items',LibrarySchema);
 
 export const addNewItem = (req,res) => {
-    // let newItem = new Library(req.body);
-    // console.log(req.body);
-    // newItem.save((err,item) => {
-    //     if(err) {
-    //         res.send(err);
-    //     }
-    //     res.json(item)
-    // });
+    // if(req.body.quantity=== null) {
+    //     req.body.quantity = ;
+    // }
+    console.log(req.body.quantity);
     let newItem = new Library({
         itemName: req.body.itemName,
         itemType: req.body.itemType,
-        quantity:req.body.quantity,
-        loanPeriod:req.body.loanPeriod
+        quantity:req.body.quantity?req.body.quantity:1,
+        loanPeriod:req.body.loanPeriod?req.body.loanPeriod:30
     });
-    // Library.findOneAndUpdate({itemName: req.params.itemName}, {$set: {itemName: req.body.itemName,itemType: req.body.itemType,quantity:req.body.quantity}}
-    //   , {sort: {_id: -1},    upsert: true  }).exec()
+    
     Library.findOne({"itemName":req.params.itemName})
     .then(result=>{
         console.log(result);
