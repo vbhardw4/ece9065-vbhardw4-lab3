@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ECE 9065 - Lab 2</title>
+    <meta charset="UTF-8">
+    <script type='text/javascript' src='script.js'></script>
+    <link rel="stylesheet" href="index.css">
+    </head>
+        <div id="mainDiv" class="mainDivClass">
+            <h1> Welcome to London Public Library </h1>
+            <div id="form">
+                <form name="user_registeration" id="user_registeration"> 
+                    <div class="container">
+                        <h1>User Information</h1>
+                            <label  for="name_label" id="name_label" > <b>Name </b> </label> <br/> 
+                            <input type="text" id="name" name="name" value ="admin" maxlength="100" onchange="validateName()" placeholder="Enter you name here" required> <span id="validate_name"> </span> <br/> 
+                            <label for="email_label" id="email_label"> <b>Email</b></label> <br/> 
+                            <input type="email" id="email" name="email" value="a@a.com" placeholder="Enter your email id here" onchange="validateEmail()" required> <span id="validate_email"> </span> <br/> 
+                            <label for="birth_year_label" id="birth_year_label"><b>Year of birth:</b> </label>  <br/> 
+                            <input type="text" id="birth_year" name="birth_year" value="1867" onchange="validateBirthYear()" placeholder="Enter your year of birth here" required> <span id="validate_birth_year"> </span> <br/> 
+                            <button type="submit" id="submit_button" value="Submit" onclick="handleSubmit()">Submit</button> 
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
