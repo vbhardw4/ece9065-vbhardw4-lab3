@@ -108,3 +108,54 @@ export const deleteItemById = (req,res)=>{
         res.status(500).json({res:'Unable to delete. Please check '});
     });
 };
+export const findAllItems = (req,res) => {
+    console.log("Fetching all books and cds present in the DB");
+    Library.findAllItems()
+};
+
+export const updateItemById = (req,res) => {
+    let itemName = req.params.itemName;
+    console.log(`Updating item whose name is ${itemName}`);
+    Library.findOne({"itemName":req.params.itemName})
+    .then(result=>{
+        console.log(result);
+        if(result==null) {
+            console.log("Need to save the items to the Database"); 
+            res.status(404).json({'message':`item ${itemName} not found in the DB`});
+        }
+        else {
+            let book_id = result._id;
+            console.log(`Need to update the items with id ${book_id}`);
+            Library.updateOne({_id: book_id}, {$set: {itemName: req.body.itemName,itemType:req.body.itemType,quantity:req.body.quantity,loanPeriod:req.body.loanPeriod}})
+            .then(result=>{
+                res.status(200).json({'message':'Book already present','item':result});
+            })
+            .catch(error=>{
+                res.status(500).json({"message":`Encountered error while updating ${book_id}`});
+            })
+            
+        }
+        
+    }).catch(err=>{
+        console.log(err);
+        res.status(500).json({
+            error:err
+        });
+    });
+};
+
+export const fetchAllItems = (req,res) =>{
+    Library.find().then(result=>{
+        if(result==null){
+            res.status(404).send({"message":`No books found in the DB! Please add first`});
+        }
+        else {
+            console.log('Items Fetched');
+            res.send({result});
+            
+        }
+    })
+    .catch(error=>{
+        res.status(500).send({"message":`Technical Error Occured!`});
+    })
+};
