@@ -353,3 +353,24 @@ h2, h1 {
   width: 234px;
   height: 39px;
 }
+#newCdDueDateInput {
+  margin-left: 20px; 
+  width: 234px;
+  height: 39px;
+}
+#adminSubmitModifiedDueDates {  
+  height: 30px;
+  width: 160px;
+}
+#linkToAddMoreItem, #linkToRemoveExistingItem, #linkToModifyDueDates, #linkToLogOut {
+  cursor: pointer;
+}
+#createSpanElementForCD, #createSpanElementForBook, #createSpanElementForBookCreated, #labelForSelectItemToUpdate,#labelForItemsFetchedByItemType,#nameOfItemLabel,#prevQtyOfItemLabel,#newQtyOfItemLabel,#prevLoanPeriodOfItemLabel,#newLoanPeriodOfItemLabel
+{
+  color: rgb(151, 202, 151);
+  font-style: italic;
+}
+#itemNameHeadingDiv, #itemTypeHeadingDiv, #itemQtyHeadingDiv,#itemLoanPeriodHeadingDiv,#itemDateCreatedHeadingDiv, #labelForItemsFetchedByItemType,#nameOfItemLabel,#prevQtyOfItemLabel,#newQtyOfItemLabel,#prevLoanPeriodOfItemLabel,#newLoanPeriodOfItemLabel {
+  font-family: cursive;
+  font-weight: bold;
+}
