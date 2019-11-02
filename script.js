@@ -173,9 +173,7 @@ function createAdminPageMainDiv() {
     mainDiv.appendChild(adminPageMainDiv);
 }
 function handleAdminAddMoreItemsClick(event) {
-    if(timer !==null) {
-        clearInterval(timer);
-    }
+    
     
     removePreviousClickDivsFirst();
     let divsToDisable = [];
@@ -460,13 +458,7 @@ function createAdminMenuSidebarPage() {
     adminPageMainDiv.appendChild(menuDiv);
 }
 function retrieveAllItems(event) {
-    // if(event.target.innerText === "View All Items") {
-    //     pollingFlag = false;
-    // }
-    if(undefined !== event) {
-        event.preventDefault();
-        timer = setInterval(retrieveAllItems,2000);
-    }
+    
     
     
     var request = new Request(`http://localhost:3000/items`, {
@@ -602,4 +594,21 @@ function showAllItems(data) {
         divToViewAllItems.appendChild(itemDateCreatedDiv);
     });
     getElementById("mainDiv").appendChild(divToViewAllItems);
+}
+function openSideBarNavigation() {
+    document.getElementById("menuDiv").style.width = "250px";
+    document.getElementById("mainDiv").style.marginLeft = "250px";
+  }
+  
+  function closeSideBarNavigation() {
+    document.getElementById("menuDiv").style.width = "0";
+    document.getElementById("mainDiv").style.marginLeft= "0";
+  }
+function createAdminRightsDescription() {
+    let adminPageMainDiv = getElementById("adminPageMainDiv");
+    let spanToOpenSideBar = createElement("span");
+    spanToOpenSideBar.id = "spanToOpenSideBar";
+    spanToOpenSideBar.innerHTML = "&#9776;";
+    spanToOpenSideBar.addEventListener("click",openSideBarNavigation);
+    adminPageMainDiv.appendChild(spanToOpenSideBar);
 }
