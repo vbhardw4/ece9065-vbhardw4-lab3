@@ -19,7 +19,7 @@ export const LibrarySchema = new Schema({
    },
    quantity : {
         type: Number,
-        // required: 'Please enter the valid quantity of the items',
+        
         min:1,
         default:1
    },
