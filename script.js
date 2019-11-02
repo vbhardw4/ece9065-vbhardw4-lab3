@@ -229,3 +229,21 @@ function showAdminModifyItemQuanityPage() {}
 function retrieveAllItems() {}
 function handleAdminLogOut() {}
 function closeSideBarNavigation() {}
+
+function openSideBarNavigation() {
+    document.getElementById("menuDiv").style.width = "250px";
+    document.getElementById("mainDiv").style.marginLeft = "250px";
+  }
+  
+  function closeSideBarNavigation() {
+    document.getElementById("menuDiv").style.width = "0";
+    document.getElementById("mainDiv").style.marginLeft= "0";
+  }
+  function createAdminRightsDescription() {
+    let adminPageMainDiv = getElementById("adminPageMainDiv");
+    let spanToOpenSideBar = createElement("span");
+    spanToOpenSideBar.id = "spanToOpenSideBar";
+    spanToOpenSideBar.innerHTML = "&#9776;";
+    spanToOpenSideBar.addEventListener("click",openSideBarNavigation);
+    adminPageMainDiv.appendChild(spanToOpenSideBar);
+}
