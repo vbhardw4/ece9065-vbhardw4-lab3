@@ -371,6 +371,44 @@ function submitAdminAddEvent(event) {
    
     
 }
+function handleCreateItemRequest(itemName,itemType,itemLoanDuration,itemQuantity) {
+    console.log('Request reached to server');
+    let saved_book_result;
+
+    var request = new Request(`http://localhost:3000/item/${itemName.value}`, {
+                    headers: new Headers({
+                        'Content-Type': 'application/json'
+                        }),
+                    method: 'PUT',
+                    
+                    body:JSON.stringify({
+                            "itemName": itemName.value,
+                            "itemType": itemType,
+                            "loanPeriod":itemLoanDuration.value,
+                            "quantity":itemQuantity.value
+                    })    
+                    });
+                    fetch(request)
+                    .then(response => {
+                        if(response.ok){
+                            response.json().then(json=>{
+                                console.log(`json data is ${json}`);
+                                getElementById("createSpanElementForBook").innerHTML = "" ;
+                                getElementById("createSpanElementForBook").innerHTML = `${json.item.itemName} saved successfully` ;
+                            });
+                        }
+                        else if(response.status == 500){
+                            console.log('got status as 500');
+                            response.json().then(json=>{
+                                getElementById("createSpanElementForBook").innerHTML = "";
+                                getElementById("createSpanElementForBook").innerHTML = `${json.error.details[0].message}`;
+                            });
+                        }
+                    })
+                    .catch(err => {
+                        getElementById("createSpanElementForBook").innerHTML = ``;
+                    });   
+}
 function createAdminMenuSidebarPage() {
     let menuDiv = createElement("div");
     menuDiv.id = "menuDiv";
