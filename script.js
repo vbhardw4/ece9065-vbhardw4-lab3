@@ -1336,7 +1336,7 @@ function createAdminMenuSidebarPage() {
 
 function retrieveItemByName(event) {
     event.preventDefault();
-    if(undefined !== timer) {
+    if(timer !== null ) {
         clearInterval(timer);
     }
     removePreviousClickDivsFirst();
@@ -1365,7 +1365,7 @@ function retrieveAllItems(event) {
     // if(event.target.innerText === "View All Items") {
     //     pollingFlag = false;
     // }
-    if(undefined !== event) {
+    if(event !== undefined) {
         event.preventDefault();
         timer = setInterval(retrieveAllItems,2000);
     }
