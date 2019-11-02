@@ -588,6 +588,7 @@ function handleAdminShowItemAttributesByName() {
     let divForFetchItemAttributesByName = getElementById("divForFetchItemAttributesByName");
 
     divToShowAllItemAttributes.id = "divToShowAllItemAttributes";
+    
     let nameOfItemLabel = createElement("label");
     nameOfItemLabel.id = "nameOfItemLabel";
     nameOfItemLabel.innerHTML = `Selected Item`; 
@@ -1415,6 +1416,10 @@ function removePreviousClickDivsFirst() {
     if(getElementById("divForAdminRemoveItem")!==null) {
         mainDiv.removeChild(getElementById("divForAdminRemoveItem"));    
     }
+    if(getElementById("divForFetchItemAttributesByName")!==null) {
+        mainDiv.removeChild(getElementById("divForFetchItemAttributesByName"));
+    }
+    
     
 }
 
