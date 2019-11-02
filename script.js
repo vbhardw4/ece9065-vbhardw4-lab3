@@ -546,6 +546,9 @@ function getItemType(itemType,flagToConsider){
                                 else if(flagToConsider === "Delete_Item") {
                                     adminShowHandleDeleteItemElementToDelete(allFetchedItems);
                                 }
+                                else if(flagToConsider === "Fetch_Item_By_Name") {
+                                    adminShowRetrieveItemElementToViewByName(allFetchedItems);
+                                }
                 
                                 
                            })
@@ -555,7 +558,97 @@ function getItemType(itemType,flagToConsider){
                     // return response.json(err);
                     });   
 }
+function adminShowRetrieveItemElementToViewByName(allFetchedItems) {
+    if(getElementById("labelForItemsFetchedByItemType")!==null && getElementById("divForFetchItemAttributesByName")) {
+        getElementById("divForFetchItemAttributesByName").removeChild(getElementById("labelForItemsFetchedByItemType"));
+       
+    }
+    if(getElementById("selectItemLabel")!== null && getElementById("labelForSelectItemToUpdate")!== null) {
+        getElementById("divForFetchItemAttributesByName").removeChild(getElementById("selectItemLabel"));
+    }
 
+    // if(getElementById("divForFetchItemAttributesByName")!==null) {
+    //     getElementById("divForFetchItemAttributesByName").removeChild(getElementById("divForFetchItemAttributesByName"));
+    // }
+
+    let [selectItemLabel,labelForItemsFetchedByItemType] = fetchItemsBasedOnItemTypeSelected(allFetchedItems);
+    labelForItemsFetchedByItemType.addEventListener('change',handleAdminShowItemAttributesByName);
+    divForFetchItemAttributesByName.appendChild(selectItemLabel);
+    divForFetchItemAttributesByName.appendChild(labelForItemsFetchedByItemType);
+
+}
+function handleAdminShowItemAttributesByName() {
+    event.preventDefault();
+    console.log(event);
+    let selectedItem = event.target.value;
+    if(getElementById("divToShowAllItemAttributes")!==null) {
+        getElementById("divForFetchItemAttributesByName").removeChild(getElementById("divToShowAllItemAttributes"));
+    }
+    let divToShowAllItemAttributes = createElement("div");
+    let divForFetchItemAttributesByName = getElementById("divForFetchItemAttributesByName");
+
+    divToShowAllItemAttributes.id = "divToShowAllItemAttributes";
+    let nameOfItemLabel = createElement("label");
+    nameOfItemLabel.id = "nameOfItemLabel";
+    nameOfItemLabel.innerHTML = `Selected Item`; 
+    
+
+    let inputTextToShowItemName = createElement("input");
+    inputTextToShowItemName.id = "inputTextToShowItemName";
+    inputTextToShowItemName.value = `${selectedItem}`;
+    inputTextToShowItemName.innerHTML = `${selectedItem}`;
+    inputTextToShowItemName.disabled = true;
+
+
+    let prevLoanPeriodOfItemLabel = createElement("label");
+    prevLoanPeriodOfItemLabel.id = "prevLoanPeriodOfItemLabel";
+    prevLoanPeriodOfItemLabel.innerHTML = "Old Loan Period";
+    
+    let [itemName,itemType,itemQty,itemLoanPeriod] = getItemsAttributes(selectedItem);
+
+    let typeOfItemLabel = createElement("label");
+    typeOfItemLabel.id = "typeOfItemLabel";
+    typeOfItemLabel.innerHTML = `Selected Item Type`; 
+    
+    let itemTypeElement = createElement("input");
+    itemTypeElement.id = "itemTypeElement";
+    itemTypeElement.value = itemType;
+    itemTypeElement.disabled = true;
+
+    
+    let qtyOfItemLabel = createElement("label");
+    qtyOfItemLabel.id = "qtyOfItemLabel";
+    qtyOfItemLabel.innerHTML = "Quantity of Item";
+    
+    let qtyOfItemText = createElement("input");
+    qtyOfItemText.id = "qtyOfItemText";
+    qtyOfItemText.type = "number";
+    qtyOfItemText.value = itemQty;
+
+    let loanPeriodOfItemLabel = createElement("label");
+    loanPeriodOfItemLabel.id = "loanPeriodOfItemLabel";
+    loanPeriodOfItemLabel.innerHTML = "Loan Period of Item";
+    
+    let loanPeriodOfItemText = createElement("input");
+    loanPeriodOfItemText.id = "loanPeriodOfItemText";
+    loanPeriodOfItemText.type = "number";
+    loanPeriodOfItemText.value = itemLoanPeriod;
+
+    divToShowAllItemAttributes.appendChild(nameOfItemLabel);
+    divToShowAllItemAttributes.appendChild(inputTextToShowItemName);
+
+    divToShowAllItemAttributes.appendChild(typeOfItemLabel);
+    divToShowAllItemAttributes.appendChild(itemTypeElement);
+    
+    divToShowAllItemAttributes.appendChild(qtyOfItemLabel);
+    divToShowAllItemAttributes.appendChild(qtyOfItemText);
+    
+    divToShowAllItemAttributes.appendChild(loanPeriodOfItemLabel);
+    divToShowAllItemAttributes.appendChild(loanPeriodOfItemText);
+
+    divForFetchItemAttributesByName.appendChild(divToShowAllItemAttributes);
+
+}
 function adminShowHandleDeleteItemElementToDelete(allFetchedItems) {
     let divForAdminRemoveItem = getElementById("divForAdminRemoveItem");
     if(getElementById("divToShowItemNameToDelete")!== null) {
@@ -1214,6 +1307,11 @@ function createAdminMenuSidebarPage() {
     linkToshowAllItems.innerHTML = "View All Items";
     linkToshowAllItems.addEventListener("click",retrieveAllItems);
 
+    linkToshowItemByName = createElement("a");
+    linkToshowItemByName.id = "linkToshowAllItems";
+    linkToshowItemByName.innerHTML = "View Item Attributes by Name";
+    linkToshowItemByName.addEventListener("click",retrieveItemByName);
+
     
     linkToLogOut = createElement("a");
     linkToLogOut.id = "linkToLogOut";
@@ -1229,11 +1327,39 @@ function createAdminMenuSidebarPage() {
     menuDiv.appendChild(linkToModifyItemQuanity);
     menuDiv.appendChild(linkToRemoveExistingItem);
     menuDiv.appendChild(linkToshowAllItems);
+    menuDiv.appendChild(linkToshowItemByName);
     menuDiv.appendChild(linkToLogOut);
     menuDiv.appendChild(linkToCloseSideBarNav);
     adminPageMainDiv.appendChild(menuDiv);
 }
 
+function retrieveItemByName(event) {
+    event.preventDefault();
+    if(undefined !== timer) {
+        clearInterval(timer);
+    }
+    removePreviousClickDivsFirst();
+    let divsToDisable = [];
+    divsToDisable.push(getElementById("paraDivElement"));
+    turnDivOnOff(divsToDisable,true);
+    showToAdmin = true;
+
+    let [selectItemTypeLabel, labelForSelectItemToUpdate] =  getGenericShowItemTypeLabel();
+   
+    labelForSelectItemToUpdate.addEventListener('change',handleAdminFetchItemByNamePage);
+    let divForFetchItemAttributesByName = createElement("div");
+    divForFetchItemAttributesByName.id = "divForFetchItemAttributesByName";
+    divForFetchItemAttributesByName.appendChild(selectItemTypeLabel);
+    divForFetchItemAttributesByName.appendChild(labelForSelectItemToUpdate);
+    getElementById("mainDiv").appendChild(divForFetchItemAttributesByName);      
+}
+function handleAdminFetchItemByNamePage(event) {
+    console.log(event);
+    let itemTypeToGet = event.target.value;
+    flagToConsider = "Fetch_Item_By_Name";
+    getItemType(itemTypeToGet,flagToConsider);
+
+}
 function retrieveAllItems(event) {
     // if(event.target.innerText === "View All Items") {
     //     pollingFlag = false;
@@ -1286,7 +1412,10 @@ function removePreviousClickDivsFirst() {
     if(getElementById("divForAdminRemoveItem")!==null) {
         mainDiv.removeChild(getElementById("divForAdminRemoveItem"));    
     }
-
+    if(getElementById("divForAdminRemoveItem")!==null) {
+        mainDiv.removeChild(getElementById("divForAdminRemoveItem"));    
+    }
+    
 }
 
 function showAllItems(data) {
