@@ -407,6 +407,107 @@ function handleCreateItemRequest(itemName,itemType,itemLoanDuration,itemQuantity
                         getElementById("createSpanElementForBook").innerHTML = ``;
                     });   
 }
+function handleAdminRemoveExistingItemFromList(){
+    if(timer !== null) {
+        clearInterval(timer);
+    }
+    let divsToDisable = [];
+
+    removePreviousClickDivsFirst();
+    divsToDisable.push(getElementById("paraDivElement"));
+    turnDivOnOff(divsToDisable,true);
+    showToAdmin = true;
+
+    let [selectItemTypeLabel, labelForSelectItemToUpdate] =  getGenericShowItemTypeLabel();
+   
+    labelForSelectItemToUpdate.addEventListener('change',handleAdminDeleteAnItem);
+    let divForAdminRemoveItem = createElement("div");
+    divForAdminRemoveItem.id = "divForAdminRemoveItem";
+    divForAdminRemoveItem.appendChild(selectItemTypeLabel);
+    divForAdminRemoveItem.appendChild(labelForSelectItemToUpdate);
+    getElementById("mainDiv").appendChild(divForAdminRemoveItem);
+    
+    
+}
+
+function handleAdminDeleteAnItem() {
+    event.preventDefault();
+    let itemTypeToGet = event.target.value;
+    flagToConsider = "Delete_Item";
+    getItemType(itemTypeToGet,flagToConsider);
+}
+function showAdminModifyItemQuanityPage(event) {
+    event.preventDefault();
+    if(timer !== null) {
+        clearInterval(timer);
+    }
+    let divsToDisable = [];
+    removePreviousClickDivsFirst();
+    divsToDisable.push(getElementById("paraDivElement"));
+    turnDivOnOff(divsToDisable,true);
+    
+    let divForAdminUpdateQuantityOfItem = createElement("div");
+    divForAdminUpdateQuantityOfItem.id = "divForAdminUpdateQuantityOfItem";
+    let library_items_list_id = getElementById("library_items_list_id");
+    for(i=0;i<mainDiv.childElementCount;i++) {
+        if(library_items_list_id !== null && mainDiv.children[i].id == library_items_list_id.id){
+            mainDiv.removeChild(library_items_list_id);
+        }
+    }
+    let [selectItemTypeLabel, labelForSelectItemToUpdate] =  getGenericShowItemTypeLabel();
+    // let selectItemTypeLabel = createElement("label");
+    // selectItemTypeLabel.id = "selectItemTypeLabel";
+    // selectItemTypeLabel.innerHTML = "Select an item type to update";
+
+    // let labelForSelectItemToUpdate = createElement("select");
+    // labelForSelectItemToUpdate.id = "labelForSelectItemToUpdate";
+    // labelForSelectItemToUpdate.innerHTML = "Select an item Type to update quantity";
+    labelForSelectItemToUpdate.addEventListener('change',handleAdminModifyItemQuanityPage);
+    // let defaultOption = createElement("option");
+    // defaultOption.id = "defaultOption";
+    // defaultOption.value = "default";
+    // defaultOption.innerHTML = "select"
+    // let itemTypeBookOption = createElement("option");
+    // itemTypeBookOption.innerHTML=  "Book";
+    // itemTypeBookOption.id = "itemTypeBookOption";
+    // itemTypeBookOption.value = "Book";
+    // let itemTypeCDOption = createElement("option");
+    // itemTypeCDOption.id = "itemTypeCDOption";
+    // itemTypeCDOption.value = "CD";
+    // itemTypeCDOption.innerHTML = "CD";
+    // labelForSelectItemToUpdate.add(defaultOption);
+    // labelForSelectItemToUpdate.add(itemTypeBookOption);
+    // labelForSelectItemToUpdate.add(itemTypeCDOption);
+    divForAdminUpdateQuantityOfItem.appendChild(selectItemTypeLabel);
+    divForAdminUpdateQuantityOfItem.appendChild(labelForSelectItemToUpdate);
+    mainDiv.appendChild(divForAdminUpdateQuantityOfItem);
+
+}
+function getGenericShowItemTypeLabel() {
+    let labelForSelectItemToUpdate = createElement("select");
+    labelForSelectItemToUpdate.id = "labelForSelectItemToUpdate";
+    // labelForSelectItemToUpdate.innerHTML = "Select an item Type to update quantity";
+    let selectItemTypeLabel = createElement("label");
+    selectItemTypeLabel.id = "selectItemTypeLabel";
+    selectItemTypeLabel.innerHTML = "Select an item type to update";
+
+    let defaultOption = createElement("option");
+    defaultOption.id = "defaultOption";
+    defaultOption.value = "default";
+    defaultOption.innerHTML = "select"
+    let itemTypeBookOption = createElement("option");
+    itemTypeBookOption.innerHTML=  "Book";
+    itemTypeBookOption.id = "itemTypeBookOption";
+    itemTypeBookOption.value = "Book";
+    let itemTypeCDOption = createElement("option");
+    itemTypeCDOption.id = "itemTypeCDOption";
+    itemTypeCDOption.value = "CD";
+    itemTypeCDOption.innerHTML = "CD";
+    labelForSelectItemToUpdate.add(defaultOption);
+    labelForSelectItemToUpdate.add(itemTypeBookOption);
+    labelForSelectItemToUpdate.add(itemTypeCDOption);
+    return [selectItemTypeLabel,labelForSelectItemToUpdate];
+}
 function createAdminMenuSidebarPage() {
     let menuDiv = createElement("div");
     menuDiv.id = "menuDiv";
