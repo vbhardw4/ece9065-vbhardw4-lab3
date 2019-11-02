@@ -41,13 +41,15 @@ export const routes = (app) => {
         next();
     },(req,res) => {
         let val= null;
-        
+     
         const joiSchema = Joi.object().keys({
             'itemName' : Joi.string().trim().required(),
             'itemType' : Joi.string().trim().required(),
-            'quantity' : Joi.number().integer().min(1),
-            'loanPeriod' : Joi.number().integer().min(1)
+            'quantity' : Joi.number().integer().min(1).allow('', null).empty(['', null]).default(1),
+            'loanPeriod' : Joi.number().integer().min(1).allow('', null).empty(['', null]).default(30)
         });
+        
+     
         Joi.validate(req.body,joiSchema,(err,results)=>{
             if(err) {
                 val=err;
@@ -86,8 +88,8 @@ export const routes = (app) => {
         const joiSchema = Joi.object().keys({
             'itemName' : Joi.string().trim().required(),
             'itemType' : Joi.string().trim().required(),
-            'quantity' : Joi.number().integer().min(1),
-            'loanPeriod' : Joi.number().integer().min(1)
+            'quantity' : Joi.number().integer().min(1).allow('', null).empty(['', null]).default(1),
+            'loanPeriod' : Joi.number().integer().min(1).allow('', null).empty(['', null]).default(30)
         });
         Joi.validate(req.body,joiSchema,(err,results)=>{
             if(err) {
