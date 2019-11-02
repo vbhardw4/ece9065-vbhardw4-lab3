@@ -337,7 +337,7 @@ function submitAdminAddEvent(event) {
                 // let myModal = getElementById("myModal")
                 // myModal.style.display = "none";
                 // getElementById("adminPageMainDiv").removeChild(myModal);
-                getElementById("createSpanElementForCDCreated").innerHTML = `CD created successfully.`;
+                // getElementById("createSpanElementForCDCreated").innerHTML = `CD created successfully.`;
             }
             else {
                 getElementById("createSpanElementForCD").innerHTML = "";
