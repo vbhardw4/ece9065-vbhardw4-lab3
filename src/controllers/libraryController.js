@@ -56,3 +56,55 @@ export const addNewItem = (req,res) => {
     
 
 };
+
+export const fetchItemById = (req,res) => {
+    console.log(`Fetching the request by ID ${req.params.itemName}`);
+    let id = req.params.itemName;
+    Library.find({itemName:id}).exec().then(item=>{
+        if(item.length==0) {
+            console.log(item);
+            res.status(404).json({item:'Please enter a valid item name'});
+        }else {
+            res.status(200).json({'item':item});
+        }
+        
+    })
+    .catch(err=>{
+        console.log(err),
+        res.status(500).json({error:err});
+    });
+};
+
+export const fetchItemsByItemType = (req,res) => {
+    console.log(`Fetching the request by ID ${req.params.itemType}`);
+    let id = req.params.itemType;
+    Library.find({itemType:id}).then(item=>{
+        if(item.length==0) {
+            console.log(item);
+            res.status(404).json({item:'Entered item Type doesn\'t exist'});
+        }else {
+            console.log(`item fetched ${item}`);
+           
+            res.status(200).json({'item':item});
+        }
+        
+    })
+    .catch(err=>{
+        console.log(err),
+        res.status(500).json({error:err});
+    });
+};
+
+export const deleteItemById = (req,res)=>{
+    let itemName = req.params.itemName;
+    console.log(`deleting item ${req.params.itemName}`);
+    Library.findOneAndDelete({
+        itemName:itemName
+    }).exec().then(item=>{
+        res.status(200).json({res: `Item ${itemName} deleted succesfully`});
+    })
+    .catch(err=>{
+        console.log(err),
+        res.status(500).json({res:'Unable to delete. Please check '});
+    });
+};
