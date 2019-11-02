@@ -108,6 +108,7 @@ export const deleteItemById = (req,res)=>{
         res.status(500).json({res:'Unable to delete. Please check '});
     });
 };
+
 export const findAllItems = (req,res) => {
     console.log("Fetching all books and cds present in the DB");
     Library.findAllItems()
@@ -159,3 +160,4 @@ export const fetchAllItems = (req,res) =>{
         res.status(500).send({"message":`Technical Error Occured!`});
     })
 };
+
