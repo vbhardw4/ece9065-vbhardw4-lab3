@@ -459,3 +459,147 @@ function createAdminMenuSidebarPage() {
     menuDiv.appendChild(linkToCloseSideBarNav);
     adminPageMainDiv.appendChild(menuDiv);
 }
+function retrieveAllItems(event) {
+    // if(event.target.innerText === "View All Items") {
+    //     pollingFlag = false;
+    // }
+    if(undefined !== event) {
+        event.preventDefault();
+        timer = setInterval(retrieveAllItems,2000);
+    }
+    
+    
+    var request = new Request(`http://localhost:3000/items`, {
+                    headers: new Headers({
+                        'Content-Type': 'application/json'
+                        }),
+                    method: 'GET',
+                    });
+                    fetch(request)
+                    .then(response => {
+                        try {
+                            if(response.ok){
+                                response.json().then(data=>{
+                                    showAllItems(data.result);
+                                });
+                            }
+                        }
+                        catch(error) {
+                            console.log("");
+                        }
+                    })
+                    .catch(err => {
+                    // return response.json(err);
+                    });   
+}
+
+function removePreviousClickDivsFirst() {
+    let mainDiv = getElementById("mainDiv");
+
+    if(getElementById("adminAddContentDiv")!== null) {
+        mainDiv.removeChild(getElementById("adminAddContentDiv"));
+    }
+    if(getElementById("divToViewAllItems")!== null) {
+        mainDiv.removeChild(getElementById("divToViewAllItems"));
+    }
+    if(getElementById("divForAdminUpdateLoanPeriodOfItem")!==null){
+        mainDiv.removeChild(getElementById("divForAdminUpdateLoanPeriodOfItem"));
+    }
+    if(getElementById("divForAdminUpdateQuantityOfItem")!==null){
+        mainDiv.removeChild(getElementById("divForAdminUpdateQuantityOfItem"));
+    }
+    if(getElementById("divForAdminRemoveItem")!==null) {
+        mainDiv.removeChild(getElementById("divForAdminRemoveItem"));    
+    }
+
+}
+
+function showAllItems(data) {
+    removePreviousClickDivsFirst();
+    let divToViewAllItems = createElement("div");
+    divToViewAllItems.id = "divToViewAllItems";
+    let divsToDisable = [];
+    if(getElementById("paraDivElement")!== null) {
+        divsToDisable.push(getElementById("paraDivElement"));
+        turnDivOnOff(divsToDisable,true);
+    }
+    let itemNameHeadingDiv = createElement("div");
+    itemNameHeadingDiv.id = "itemNameHeadingDiv";
+    itemNameHeadingDiv.className = "box";
+    let itemNameHeadingLabel = createElement("label");
+    itemNameHeadingLabel.innerHTML = "Item Name";
+    itemNameHeadingDiv.appendChild(itemNameHeadingLabel);
+    
+    let itemTypeHeadingDiv = createElement("div");
+    itemTypeHeadingDiv.id = "itemTypeHeadingDiv" ;
+    itemTypeHeadingDiv.className = "box";
+    let itemTypeHeadingLabel = createElement("label");
+    itemTypeHeadingLabel.innerHTML = "Item Type";
+    itemTypeHeadingDiv.appendChild(itemTypeHeadingLabel)
+    
+    let itemQtyHeadingDiv = createElement("div");
+    itemQtyHeadingDiv.id = "itemQtyHeadingDiv";
+    itemQtyHeadingDiv.className = "box";
+    let itemQtyHeadingLabel = createElement("label");
+    itemQtyHeadingLabel.innerHTML = "Item Quantity";
+    itemQtyHeadingDiv.appendChild(itemQtyHeadingLabel);
+
+    let itemLoanPeriodHeadingDiv = createElement("div");
+    itemLoanPeriodHeadingDiv.id = "itemLoanPeriodHeadingDiv";
+    itemLoanPeriodHeadingDiv.className = "box";
+    let itemLoanPeriodHeadingLabel = createElement("label");
+    itemLoanPeriodHeadingLabel.innerHTML = "Item Loan Period";
+    itemLoanPeriodHeadingDiv.appendChild(itemLoanPeriodHeadingLabel);
+
+    let itemDateCreatedHeadingDiv = createElement("div");
+    itemDateCreatedHeadingDiv.id = "itemDateCreatedHeadingDiv";
+    itemDateCreatedHeadingDiv.className = "box";
+    let itemDateCreatedHeadingLabel = createElement("label");
+    itemDateCreatedHeadingLabel.innerHTML = "Creation Date";
+    itemDateCreatedHeadingDiv.appendChild(itemDateCreatedHeadingLabel);
+
+    divToViewAllItems.appendChild(itemNameHeadingDiv);
+    divToViewAllItems.appendChild(itemTypeHeadingDiv);
+    divToViewAllItems.appendChild(itemQtyHeadingDiv);
+    divToViewAllItems.appendChild(itemLoanPeriodHeadingDiv);
+    divToViewAllItems.appendChild(itemDateCreatedHeadingDiv);
+
+    data.map(item=>{
+        let itemNameDiv = createElement("div");
+        itemNameDiv.className = "box";
+        let itemNameLabel = createElement("label");
+        itemNameLabel.innerHTML = item.itemName;
+        itemNameDiv.appendChild(itemNameLabel);
+        
+        let itemTypeDiv = createElement("div");
+        itemTypeDiv.className = "box";
+        let itemTypeLabel = createElement("label");
+        itemTypeLabel.innerHTML = item.itemType;
+        itemTypeDiv.appendChild(itemTypeLabel)
+        
+        let itemQtyDiv = createElement("div");
+        itemQtyDiv.className = "box";
+        let itemQtyLabel = createElement("label");
+        itemQtyLabel.innerHTML = item.quantity;
+        itemQtyDiv.appendChild(itemQtyLabel);
+
+        let itemLoanPeriodDiv = createElement("div");
+        itemLoanPeriodDiv.className = "box";
+        let itemLoanPeriodLabel = createElement("label");
+        itemLoanPeriodLabel.innerHTML = item.loanPeriod;
+        itemLoanPeriodDiv.appendChild(itemLoanPeriodLabel);
+
+        let itemDateCreatedDiv = createElement("div");
+        itemDateCreatedDiv.className = "box";
+        let itemDateCreatedLabel = createElement("label");
+        itemDateCreatedLabel.innerHTML = item.created_date;
+        itemDateCreatedDiv.appendChild(itemDateCreatedLabel);
+
+        divToViewAllItems.appendChild(itemNameDiv);
+        divToViewAllItems.appendChild(itemTypeDiv);
+        divToViewAllItems.appendChild(itemQtyDiv);
+        divToViewAllItems.appendChild(itemLoanPeriodDiv);
+        divToViewAllItems.appendChild(itemDateCreatedDiv);
+    });
+    getElementById("mainDiv").appendChild(divToViewAllItems);
+}
