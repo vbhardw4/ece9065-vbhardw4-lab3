@@ -164,3 +164,68 @@ function disableMainFormDivs() {
     divsToDisable.push(form);
     turnDivOnOff(divsToDisable,true);
 }
+
+function createAdminPageMainDiv() {
+    let adminPageMainDiv = createElement("div");
+    adminPageMainDiv.id = "adminPageMainDiv";
+    adminPageMainDiv.className = "adminPageMainDivClass";
+    let mainDiv = getElementById("mainDiv");
+    mainDiv.appendChild(adminPageMainDiv);
+}
+function createAdminMenuSidebarPage() {
+    let menuDiv = createElement("div");
+    menuDiv.id = "menuDiv";
+    menuDiv.className = "menuDiv";
+    linkToAddMoreItem = createElement("a");
+    linkToAddMoreItem.addEventListener("click",handleAdminAddMoreItemsClick);
+
+    linkToAddMoreItem.innerHTML = "Add More Item";
+    linkToAddMoreItem.id = "linkToAddMoreItem";
+
+    linkToRemoveExistingItem = createElement("a");
+    linkToRemoveExistingItem.innerHTML = "Remove an existing item";
+    linkToRemoveExistingItem.id = "linkToRemoveExistingItem";
+    linkToRemoveExistingItem.addEventListener("click",handleAdminRemoveExistingItemFromList);
+
+    linkToModifyItemLoanPeriod = createElement("a");
+    linkToModifyItemLoanPeriod.id = "linkToModifyItemLoanPeriod";
+    linkToModifyItemLoanPeriod.innerHTML = "Modify loan period of an Item";
+    linkToModifyItemLoanPeriod.addEventListener("click",showAdminModifyLoanPeriodPage);
+
+
+    linkToModifyItemQuanity = createElement("a");
+    linkToModifyItemQuanity.id = "linkToModifyItemQuanity";
+    linkToModifyItemQuanity.innerHTML = "Modify quantity of an Item";
+    linkToModifyItemQuanity.addEventListener("click",showAdminModifyItemQuanityPage);
+
+    linkToshowAllItems = createElement("a");
+    linkToshowAllItems.id = "linkToshowAllItems";
+    linkToshowAllItems.innerHTML = "View All Items";
+    linkToshowAllItems.addEventListener("click",retrieveAllItems);
+
+    
+    linkToLogOut = createElement("a");
+    linkToLogOut.id = "linkToLogOut";
+    linkToLogOut.innerHTML = "Log Out";
+    linkToLogOut.addEventListener("click",handleAdminLogOut);
+    linkToCloseSideBarNav = createElement("a");
+    linkToCloseSideBarNav.href = "javascript:void(0)"
+    linkToCloseSideBarNav.className = "closebtn";
+    linkToCloseSideBarNav.addEventListener("click",closeSideBarNavigation);
+    linkToCloseSideBarNav.innerHTML = "&times;"
+    menuDiv.appendChild(linkToAddMoreItem);
+    menuDiv.appendChild(linkToModifyItemLoanPeriod);
+    menuDiv.appendChild(linkToModifyItemQuanity);
+    menuDiv.appendChild(linkToRemoveExistingItem);
+    menuDiv.appendChild(linkToshowAllItems);
+    menuDiv.appendChild(linkToLogOut);
+    menuDiv.appendChild(linkToCloseSideBarNav);
+    adminPageMainDiv.appendChild(menuDiv);
+}
+function handleAdminAddMoreItemsClick() {}
+function handleAdminRemoveExistingItemFromList(){}
+function showAdminModifyLoanPeriodPage() {}
+function showAdminModifyItemQuanityPage() {}
+function retrieveAllItems() {}
+function handleAdminLogOut() {}
+function closeSideBarNavigation() {}
