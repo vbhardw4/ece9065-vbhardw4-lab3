@@ -374,3 +374,23 @@ h2, h1 {
   font-family: cursive;
   font-weight: bold;
 }
+#labelForSelectItemToUpdate, #labelForItemsFetchedByItemType {
+  margin-right: 10px;
+}
+#selectItemLabel,#selectItemTypeLabel, #displayableLabelForItemsFetchedByItemType {
+  margin-right: 10px;
+}
+#divForAdminUpdateQuantityOfItem,#divForAdminUpdateLoanPeriodOfItem,#divForAdminRemoveItem,#adminAddContentDiv {
+  left: 100px;
+  top: 100px;
+  position: relative;
+}
+#divToShowItemNameAndQtyToUpdate,#divToShowItemNameAndLoanPeriodToUpdate {
+  top:50px;
+  position: relative;
+}
+#submitButtonToUpdateNewQty,#submitButtonToUpdateNewLoanPeriod{
+  position: relative;  
+  margin-left: 300px;
+  margin-top: 30px;
+}
