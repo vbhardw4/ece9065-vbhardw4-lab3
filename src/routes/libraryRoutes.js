@@ -70,3 +70,15 @@ export const routes = (app) => {
         console.log('Saving the items');
         deleteItemById(req,res);
     })
+    app.route('/item/itemType/:itemType')
+    .get((req,res,next)=> {
+        //middlerware
+        console.log(`Request parameter got in the GET request for fetching particular itemType elements is ${req.params.itemType}`);
+        console.log(`Request from :${req.originalUrl}`);
+        console.log(`Request type :${req.method}`);
+        next();
+    },(req,res) => {
+        console.log('Fetching the particular item id');
+        fetchItemsByItemType(req,res);
+    })
+}
