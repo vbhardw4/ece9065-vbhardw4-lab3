@@ -29,6 +29,22 @@ export const routes = (app) => {
         console.log('Fetching the particular item id');
         fetchItemById(req,res);
     })
+    .post((req,res,next)=> {
+        //middlerware
+        // console.log("joiValidationResults are : "+joiValidationResults);
+        console.log(`Request parameter got in the POST request is ${req.params.itemName}`);
+        console.log(`Request from :${req.originalUrl}`);
+        console.log(`Request type :${req.method}`);
+        // password must be at least 5 chars long
+
+        next();
+    },(req,res) => {
+       
+                updateItemById(req,res);
+       
+            
+        //}
+    })
     .delete((req,res,next)=> {
         //middlerware
         console.log(`Request parameter got in the DELETE request is ${req.params.itemName}`);
