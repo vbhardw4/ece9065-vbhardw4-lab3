@@ -172,6 +172,205 @@ function createAdminPageMainDiv() {
     let mainDiv = getElementById("mainDiv");
     mainDiv.appendChild(adminPageMainDiv);
 }
+function handleAdminAddMoreItemsClick(event) {
+    if(timer !==null) {
+        clearInterval(timer);
+    }
+    
+    removePreviousClickDivsFirst();
+    let divsToDisable = [];
+    // let library_items_list_id = getElementById("library_items_list_id");
+    
+    // let headerDiv = getElementById("headerDiv");
+    // for(i=0;i<mainDiv.childElementCount;i++) {
+    //     if(library_items_list_id !== null && mainDiv.children[i].id == library_items_list_id.id){
+    //         mainDiv.removeChild(library_items_list_id);
+    //     }
+    // }
+    // if(getElementById("adminPageMainDiv")!==null) {
+    //     adminPageMainDiv.removeChild(getElementById("headerDiv"));
+        
+        
+    //     let createHeader = createElement("h1");
+        
+    //     adminPageMainDiv.appendChild(headerDiv);
+    // }
+    divsToDisable.push(getElementById("paraDivElement"));
+    turnDivOnOff(divsToDisable,true);
+    // let adminAddContentDiv = createElement("div");
+    // adminAddContentDiv.id = "adminAddContentDiv";
+    // adminAddContentDiv.className = "adminAddContentDivClass";
+    // selectItemLabel = createElement("label")
+    // selectItemLabel.id = "selectItemLabel";
+    // selectItemLabel.innerHTML = "Select An item you want to add";
+    // let h1 = createTextNode("Select An item you want to add");
+    // if(getElementById("selectWhichItemToAdd")!==null) {
+    //     getElementById("adminAddContentDiv").removeChild(getElementById("selectWhichItemToAdd"));
+    // }
+    // let selectWhichItemToAdd = createElement("select");
+    // selectWhichItemToAdd.id = "selectWhichItemToAdd";
+    // let bookOption = createElement("option");
+    // let defaultOption = createElement("option");
+    // defaultOption.innerHTML = "Select";
+    // defaultOption.value = "Select";
+    // bookOption.innerHTML = "Book";
+    // bookOption.value = "Book";
+   
+    // let cdOption = createElement("option");
+    // cdOption.innerHTML = "CD";
+    // cdOption.value = "CD";
+   
+    // selectWhichItemToAdd.add(defaultOption);
+    // selectWhichItemToAdd.add(bookOption);
+    // selectWhichItemToAdd.add(cdOption);
+    // selectWhichItemToAdd.addEventListener("change",handleAdminAddItem);
+   
+    // adminAddContentDiv.appendChild(selectItemLabel);
+    // adminAddContentDiv.appendChild(selectWhichItemToAdd);
+    // adminAddContentDiv.appendChild(selectWhichItemToAdd);
+    // // prepareTheModel("Add more items",adminAddContentDiv,"Press Enter to add !!! ");
+
+    let [selectItemTypeLabel, labelForSelectItemToUpdate] =  getGenericShowItemTypeLabel();
+    let adminAddContentDiv = createElement("adminAddContentDiv");
+    adminAddContentDiv.id = "adminAddContentDiv";
+    labelForSelectItemToUpdate.addEventListener("change",handleAdminAddAnItem);
+    adminAddContentDiv.appendChild(selectItemTypeLabel);
+    adminAddContentDiv.appendChild(labelForSelectItemToUpdate);
+    getElementById("mainDiv").appendChild(adminAddContentDiv);
+}
+function handleAdminAddAnItem() {
+    event.preventDefault();
+    let itemTypeToAdd = event.target.value;
+    handleAdminAddItem(itemTypeToAdd);
+    // getItemType(itemTypeToAdd,flagToConsider);
+}
+function handleAdminAddItem(itemTypeToAdd) {
+    let adminAddContentDiv = getElementById("adminAddContentDiv");
+    
+    if(itemTypeToAdd === "CD") {
+        if(getElementById("divForAddBook")!==null) {
+            getElementById("adminAddContentDiv").removeChild(getElementById("divForAddBook"));
+        }
+        if(getElementById("divForAddCD")!==null) {
+            getElementById("adminAddContentDiv").removeChild(getElementById("divForAddCD"));
+        }
+        let divForAddCD = createElement("div")
+        divForAddCD.id = "divForAddCD";
+        let inputCDName = createElement("input");
+        let inputCDQuantity = createElement("input");
+        inputCDQuantity.id = "inputCDQuantity";
+        let inputCDLoanDuration = createElement("input");
+        inputCDLoanDuration.id = "inputCDLoanDuration";
+        inputCDName.type = "text";
+        inputCDLoanDuration.type = "number";
+        inputCDQuantity.type = "number";
+        inputCDName.id = "inputCDName";
+        inputCDName.placeholder = "Enter name of the CD to add";
+        inputCDQuantity.placeholder = `Enter quantity of ${itemTypeToAdd} in numbers to add`;
+        inputCDLoanDuration.placeholder = `Enter ${itemTypeToAdd} loan duration`;
+        inputCDName.addEventListener("keyup",submitAdminAddEvent);
+        inputCDLoanDuration.addEventListener("keyup",submitAdminAddEvent);
+        inputCDQuantity.addEventListener("keyup",submitAdminAddEvent);
+        
+        let createSpanElementForCDCreated = createElement("span");
+        createSpanElementForCDCreated.id = "createSpanElementForCDCreated";
+
+        let createSpanElementForCD = createElement("span");
+        createSpanElementForCD.id = "createSpanElementForCD";
+        divForAddCD.appendChild(inputCDName);
+        divForAddCD.appendChild(inputCDQuantity);
+        divForAddCD.appendChild(inputCDLoanDuration);
+        adminAddContentDiv.appendChild(divForAddCD);
+        adminAddContentDiv.appendChild(createSpanElementForCD);
+        adminAddContentDiv.appendChild(createSpanElementForCDCreated);
+    }
+    if(itemTypeToAdd == "Book") {
+        if(getElementById("divForAddBook")!==null) {
+            getElementById("adminAddContentDiv").removeChild(getElementById("divForAddBook"));
+        }
+        if(getElementById("divForAddCD")!==null) {
+            getElementById("adminAddContentDiv").removeChild(getElementById("divForAddCD"));
+        }
+        let divForAddBook = createElement("div");
+        divForAddBook.id = "divForAddBook";
+        let inputBookName = createElement("input");
+        let inputBookQuantity = createElement("input");
+        inputBookQuantity.id = "inputBookQuantity";
+        let inputBookLoanDuration = createElement("input");
+        inputBookLoanDuration.id = "inputBookLoanDuration";
+        inputBookName.type = "text";
+        inputBookQuantity.type = "number";
+        inputBookLoanDuration.type = "number";
+        inputBookName.id = "inputBookName";
+        inputBookName.placeholder = "Enter name of the Book to add";
+        inputBookQuantity.placeholder = `Enter ${itemTypeToAdd} quantity in numbers to add`;
+        inputBookLoanDuration.placeholder = `Enter ${itemTypeToAdd} loan duration`;
+        inputBookName.addEventListener("keyup",submitAdminAddEvent);
+        inputBookQuantity.addEventListener("keyup",submitAdminAddEvent);
+        inputBookLoanDuration.addEventListener("keyup",submitAdminAddEvent);
+        let createSpanElementForBook = createElement("span");
+        let createSpanElementForBookCreated = createElement("span");
+        createSpanElementForBookCreated.id = "createSpanElementForBookCreated";
+        // let createSpanElementForBook = createElement("span");
+        createSpanElementForBook.id = "createSpanElementForBook";
+        divForAddBook.appendChild(inputBookName);
+        divForAddBook.appendChild(inputBookQuantity);
+        divForAddBook.appendChild(inputBookLoanDuration);
+        adminAddContentDiv.appendChild(divForAddBook);
+        adminAddContentDiv.appendChild(createSpanElementForBook);
+        adminAddContentDiv.appendChild(createSpanElementForBookCreated);
+    }
+}
+function submitAdminAddEvent(event) {
+    event.preventDefault();
+    let itemType = "Book";
+    if (event.keyCode === 13) {
+        if (event.path[0].id.match("CD")) {
+            let cdName = getElementById("inputCDName");
+            let inputCDLoanDuration = getElementById("inputCDLoanDuration");
+            let inputCDQuantity = getElementById("inputCDQuantity");
+
+            if(cdName.value.length !== 0) {
+                itemType = "CD";    
+                handleCreateItemRequest(cdName,itemType,inputCDLoanDuration,inputCDQuantity); 
+                // cds.push(cdName.value);
+                // let myModal = getElementById("myModal")
+                // myModal.style.display = "none";
+                // getElementById("adminPageMainDiv").removeChild(myModal);
+                getElementById("createSpanElementForCDCreated").innerHTML = `CD created successfully.`;
+            }
+            else {
+                getElementById("createSpanElementForCD").innerHTML = "";
+                getElementById("createSpanElementForCD").innerHTML = "Please enter valid cd name";
+                
+                // alert("Please enter valid cd name");
+            }
+            
+        }
+        else if(event.path[0].id.match("Book")) {
+            if(inputBookName.value.length !== 0 ){
+                let bookName = getElementById("inputBookName");
+                let inputBookLoanDuration = getElementById("inputBookLoanDuration");
+                let inputBookQuantity = getElementById("inputBookQuantity");
+
+                // books.push(bookName.value);
+                // let myModal = getElementById("myModal")
+                // myModal.style.display = "none";
+                // getElementById("adminPageMainDiv").removeChild(myModal);
+                handleCreateItemRequest(bookName,itemType,inputBookLoanDuration,inputBookQuantity);
+                
+                // getElementById("createSpanElementForBookCreated").innerHTML = `Book  created successfully`;
+            }
+            else {
+               //  getElementById("createSpanElementForBook").innerHTML = "Please enter valid book name";
+            }
+           
+        }
+        
+    }
+   
+    
+}
 function createAdminMenuSidebarPage() {
     let menuDiv = createElement("div");
     menuDiv.id = "menuDiv";
@@ -221,29 +420,4 @@ function createAdminMenuSidebarPage() {
     menuDiv.appendChild(linkToLogOut);
     menuDiv.appendChild(linkToCloseSideBarNav);
     adminPageMainDiv.appendChild(menuDiv);
-}
-function handleAdminAddMoreItemsClick() {}
-function handleAdminRemoveExistingItemFromList(){}
-function showAdminModifyLoanPeriodPage() {}
-function showAdminModifyItemQuanityPage() {}
-function retrieveAllItems() {}
-function handleAdminLogOut() {}
-function closeSideBarNavigation() {}
-
-function openSideBarNavigation() {
-    document.getElementById("menuDiv").style.width = "250px";
-    document.getElementById("mainDiv").style.marginLeft = "250px";
-  }
-  
-  function closeSideBarNavigation() {
-    document.getElementById("menuDiv").style.width = "0";
-    document.getElementById("mainDiv").style.marginLeft= "0";
-  }
-  function createAdminRightsDescription() {
-    let adminPageMainDiv = getElementById("adminPageMainDiv");
-    let spanToOpenSideBar = createElement("span");
-    spanToOpenSideBar.id = "spanToOpenSideBar";
-    spanToOpenSideBar.innerHTML = "&#9776;";
-    spanToOpenSideBar.addEventListener("click",openSideBarNavigation);
-    adminPageMainDiv.appendChild(spanToOpenSideBar);
 }
