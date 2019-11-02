@@ -278,7 +278,7 @@ h2, h1 {
   padding: 30px;
 } */
 #selectItemLabel,#displayableLabelForItemsFetchedByItemType,#nameOfItemLabel,#prevQtyOfItemLabel
-,#newQtyOfItemLabel
+,#newQtyOfItemLabel,#loanPeriodOfItemLabel,#qtyOfItemLabel,#typeOfItemLabel
 {
   padding:30px;
   font-style: italic;
@@ -380,12 +380,12 @@ h2, h1 {
 #selectItemLabel,#selectItemTypeLabel, #displayableLabelForItemsFetchedByItemType {
   margin-right: 10px;
 }
-#divForAdminUpdateQuantityOfItem,#divForAdminUpdateLoanPeriodOfItem,#divForAdminRemoveItem,#adminAddContentDiv {
+#divForAdminUpdateQuantityOfItem,#divForAdminUpdateLoanPeriodOfItem,#divForAdminRemoveItem,#adminAddContentDiv,#divForFetchItemAttributesByName {
   left: 100px;
   top: 100px;
   position: relative;
 }
-#divToShowItemNameAndQtyToUpdate,#divToShowItemNameAndLoanPeriodToUpdate {
+#divToShowItemNameAndQtyToUpdate,#divToShowItemNameAndLoanPeriodToUpdate,#divToShowAllItemAttributes {
   top:50px;
   position: relative;
 }
